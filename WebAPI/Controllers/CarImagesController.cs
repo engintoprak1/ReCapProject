@@ -6,6 +6,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Entities.DTOs;
 
 namespace WebAPI.Controllers
 {
@@ -43,9 +44,9 @@ namespace WebAPI.Controllers
         }
 
         [HttpPost("add")]
-        public IActionResult Add([FromForm(Name = "Image")]IFormFile formFile,[FromForm] CarImage carImage)
+        public IActionResult Add([FromForm] CarImageForAddDto carImageForAddDto)
         {
-            var result = _carImageService.Add(carImage,formFile);
+            var result = _carImageService.Add(carImageForAddDto);
             if (result.Success)
             {
                 return Ok(result);
@@ -54,9 +55,9 @@ namespace WebAPI.Controllers
         }
 
         [HttpPost("delete")]
-        public IActionResult Delete(CarImage carImage)
+        public IActionResult Delete(int id)
         {
-            var result = _carImageService.Delete(carImage);
+            var result = _carImageService.Delete(id);
             if (result.Success)
             {
                 return Ok(result);
@@ -65,9 +66,9 @@ namespace WebAPI.Controllers
         }
 
         [HttpPost("update")]
-        public IActionResult Update([FromForm(Name = "Image")]IFormFile formFile, [FromForm] CarImage carImage)
+        public IActionResult Update(CarImageForUpdateDto carImageForUpdateDto)
         {
-            var result = _carImageService.Update(formFile,carImage);
+            var result = _carImageService.Update(carImageForUpdateDto);
             if (result.Success)
             {
                 return Ok(result);

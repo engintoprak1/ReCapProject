@@ -10,6 +10,7 @@ using Microsoft.AspNetCore.Http;
 using System;
 using System.Collections.Generic;
 using System.Text;
+using Entities.DTOs;
 
 namespace Business.Concrete
 {
@@ -25,25 +26,28 @@ namespace Business.Concrete
         }
 
         [ValidationAspect(typeof(CarImageValidator))]
-        public IResult Add(CarImage carImage,IFormFile formFile)
+        public IResult Add(CarImageForAddDto carImageForAddDto)
         {
             IResult result = BusinessRules.Run(
-                CheckIfCarImageLimitExceeded(carImage.CarId)
+                CheckIfCarImageLimitExceeded(carImageForAddDto.CarId)
                 );
             if (result != null)
             {
                 return result;
             }
 
-            carImage.ImagePath = _uploadService.Add(formFile);
+            CarImage carImage = new CarImage();
+            carImage.CarId = carImageForAddDto.CarId;
+            carImage.ImagePath = _uploadService.Add(carImageForAddDto.Image);
             carImage.Date = DateTime.Now;
             _carImageDal.Add(carImage);
             return new SuccessResult(Messages.CarImageAdded);
         }
 
-        public IResult Delete(CarImage carImage)
+        public IResult Delete(int id)
         {
-            _uploadService.Remove(_carImageDal.Get(c => c.Id == carImage.Id).ImagePath);
+            var carImage = _carImageDal.Get(c => c.Id == id);
+            _uploadService.Remove(carImage.ImagePath);
             _carImageDal.Delete(carImage);
             return new SuccessResult(Messages.CarImageDeleted);
         }
@@ -69,9 +73,10 @@ namespace Business.Concrete
         }
 
         [ValidationAspect(typeof(CarImageValidator))]
-        public IResult Update(IFormFile formFile, CarImage carImage)
+        public IResult Update(CarImageForUpdateDto carImageForUpdateDto)
         {
-            string newPath = _uploadService.Update(_carImageDal.Get(c=>c.Id==carImage.Id).ImagePath, formFile);
+            var carImage = _carImageDal.Get(c => c.Id == carImageForUpdateDto.Id);
+            string newPath = _uploadService.Update(carImage.ImagePath,carImageForUpdateDto.Image);
             carImage.ImagePath = newPath;
             carImage.Date = DateTime.Now;
             _carImageDal.Update(carImage);

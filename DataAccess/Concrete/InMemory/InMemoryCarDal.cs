@@ -9,7 +9,7 @@ using System.Text;
 
 namespace DataAccess.Concrete.InMemory
 {
-    public class InMemoryCarDal : ICarDal
+    public class InMemoryCarDal
     {
         List<Car> _cars;
 
@@ -57,6 +57,21 @@ namespace DataAccess.Concrete.InMemory
             throw new NotImplementedException();
         }
 
+        public List<CarForListingDto> GetCarDetailsByBrandId(int id)
+        {
+            throw new NotImplementedException();
+        }
+
+        public List<CarForListingDto> GetCarDetailsByColorId(int id)
+        {
+            throw new NotImplementedException();
+        }
+
+        public List<CarForListingDto> GetCarDetailsColorId(int id)
+        {
+            throw new NotImplementedException();
+        }
+
         public void Update(Car car)
         {
             Car carToUpdate = _cars.SingleOrDefault(c=>c.Id==car.Id);
@@ -65,11 +80,6 @@ namespace DataAccess.Concrete.InMemory
             carToUpdate.DailyPrice = car.DailyPrice;
             carToUpdate.Description = car.Description;
             carToUpdate.ModelYear = car.ModelYear;
-        }
-
-        List<CarDetailDto> ICarDal.GetCarDetails()
-        {
-            throw new NotImplementedException();
         }
     }
 }

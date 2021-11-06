@@ -11,12 +11,8 @@ namespace Business.ValidationRules.FluentValidation
         public BrandValidator()
         {
             RuleFor(b=>b.BrandName).NotEmpty();
-            RuleFor(b => b.BrandName).Must(EndsWithX).WithMessage("Markalar x ile bitmeli");
         }
 
-        private bool EndsWithX(string arg)
-        {
-            return arg.EndsWith("X");
-        }
+        
     }
 }
