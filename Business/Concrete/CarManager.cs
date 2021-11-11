@@ -95,6 +95,8 @@ namespace Business.Concrete
 
         public IDataResult<CarForDetailDto> GetCarDetailById(int id)
         {
+            var result = _carDal.Get(i => i.Id == id);
+            if (result == null) return new ErrorDataResult<CarForDetailDto>();
             return new SuccessDataResult<CarForDetailDto>(_carDal.GetCarDetailById(id));
         }
     }

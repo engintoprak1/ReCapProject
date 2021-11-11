@@ -24,10 +24,12 @@ namespace DataAccess.Concrete.EntityFramework
                              on r.CustomerId equals cus.Id
                              join u in context.Users
                              on cus.UserId equals u.Id
-                             select new RentalDetailDto { BrandName = b.BrandName, FirstName = u.FirstName, LastName = u.LastName };
+                             select new RentalDetailDto { BrandName = b.BrandName,ModelName = c.ModelName,FirstName = u.FirstName, LastName = u.LastName };
                 return result.ToList();
 
             }
         }
+
+        
     }
 }

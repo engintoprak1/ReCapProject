@@ -14,6 +14,12 @@ namespace Core.Extensions
             return result;
         }
 
+        public static int GetAuthenticatedUserId(this ClaimsPrincipal claimsPrincipal)
+        {
+            var result = claimsPrincipal?.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+            return int.Parse(result);
+        }
+
         public static List<string> ClaimRoles(this ClaimsPrincipal claimsPrincipal)
         {
             return claimsPrincipal?.Claims(ClaimTypes.Role);
