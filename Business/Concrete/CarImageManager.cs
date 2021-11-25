@@ -38,15 +38,27 @@ namespace Business.Concrete
 
             CarImage carImage = new CarImage();
             carImage.CarId = carImageForAddDto.CarId;
-            carImage.ImagePath = _uploadService.Add(carImageForAddDto.Image);
+            carImage.ImagePath = _uploadService.AddFromBase64(carImageForAddDto.Image);
             carImage.Date = DateTime.Now;
             _carImageDal.Add(carImage);
             return new SuccessResult(Messages.CarImageAdded);
         }
 
+        [ValidationAspect(typeof(CarImageValidator))]
+        public IResult Update(CarImageForUpdateDto carImageForUpdateDto)
+        {
+            var carImage = _carImageDal.Get(c => c.Id == carImageForUpdateDto.CarId);
+            string newPath = _uploadService.UpdateFromBase64(carImage.ImagePath, carImageForUpdateDto.Image);
+            carImage.ImagePath = newPath;
+            carImage.Date = DateTime.Now;
+            _carImageDal.Update(carImage);
+            return new SuccessResult(Messages.CarImageUpdated);
+        }
+
         public IResult Delete(int id)
         {
             var carImage = _carImageDal.Get(c => c.Id == id);
+            if (carImage == null) return new ErrorResult();
             _uploadService.Remove(carImage.ImagePath);
             _carImageDal.Delete(carImage);
             return new SuccessResult(Messages.CarImageDeleted);
@@ -72,16 +84,7 @@ namespace Business.Concrete
             return new SuccessDataResult<CarImage>(_carImageDal.Get(c=>c.Id == carImageId));
         }
 
-        [ValidationAspect(typeof(CarImageValidator))]
-        public IResult Update(CarImageForUpdateDto carImageForUpdateDto)
-        {
-            var carImage = _carImageDal.Get(c => c.Id == carImageForUpdateDto.Id);
-            string newPath = _uploadService.Update(carImage.ImagePath,carImageForUpdateDto.Image);
-            carImage.ImagePath = newPath;
-            carImage.Date = DateTime.Now;
-            _carImageDal.Update(carImage);
-            return new SuccessResult(Messages.CarImageUpdated);
-        }
+        
 
         private IResult CheckIfCarImageLimitExceeded(int carId)
         {

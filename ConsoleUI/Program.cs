@@ -12,38 +12,13 @@ namespace ConsoleUI
         {
 
 
-            Rental rental = new Rental() { CarId = 1, CustomerId = 2, RentDate = new DateTime(2021, 10, 7), ReturnDate = null };
-            RentalManager rentalManager = new RentalManager(new EfRentalDal());
-            var result = rentalManager.Add(rental);
-            //var result = rentalManager.Update(rental);
-            Console.WriteLine(result.Message);
+            //Rental rental = new Rental() { CarId = 1, CustomerId = 2, RentDate = new DateTime(2021, 10, 7), ReturnDate = null };
+            //RentalManager rentalManager = new RentalManager(new EfRentalDal());
+            //var result = rentalManager.Add(rental);
+            ////var result = rentalManager.Update(rental);
+            //Console.WriteLine(result.Message);
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+            
 
             //AddCustomer();
             //AddUser();

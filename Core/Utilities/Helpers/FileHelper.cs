@@ -10,7 +10,7 @@ namespace Core.Utilities.Helpers
 {
     public class FileHelper
     {
-        public static string Add(IFormFile file)
+        public static string Add(IFormFile file,string folder="")
         {
             if (file.Length > 0)
             {
@@ -20,22 +20,37 @@ namespace Core.Utilities.Helpers
                     file.CopyTo(fileStream);
                 }
                 string newPath = NewPath(file);
-                File.Move(tempPath,Environment.CurrentDirectory + @"\wwwroot\images\" + newPath);
+                File.Move(tempPath,Environment.CurrentDirectory + @"\wwwroot\images\"+ folder + newPath);
                 return newPath;
             }
             return null;
         }
 
-
-        public static IResult Remove(string path)
+        public static string AddFromBase64(string base64, string folder = "")
         {
-            path = Environment.CurrentDirectory + @"\wwwroot\images\" + path;
+            base64 = Regex.Replace(base64, @"^data:image\/[a-zA-Z]+;base64,", string.Empty);
+            byte[] imageBytes = Convert.FromBase64String(base64);
+            string newPath = NewPathForBase64();
+            File.WriteAllBytes(Environment.CurrentDirectory + @"\wwwroot\images\" + folder + @"\" + newPath, imageBytes);
+            return newPath;
+        }
+
+       
+
+        public static IResult Remove(string path,string folder = "")
+        {
+            path = Environment.CurrentDirectory + @"\wwwroot\images\" + folder + path;
             if (!File.Exists(path))
             {
                 return new ErrorResult("File not found.");
             }
             File.Delete(path);
             return new SuccessResult("File deleted succesfully.");
+        }
+        public static string UpdateBase64(string oldPath, string base64)
+        {
+            Remove(oldPath);
+            return AddFromBase64(base64);
         }
 
         public static string Update(string oldPath, IFormFile file)
@@ -51,5 +66,9 @@ namespace Core.Utilities.Helpers
             return Guid.NewGuid() + fileExtension;
         }
 
+        public static string NewPathForBase64()
+        {
+            return Guid.NewGuid().ToString("N") + ".jpg";
+        }
     }
 }

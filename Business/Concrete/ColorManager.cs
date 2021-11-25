@@ -1,5 +1,6 @@
 ﻿using Business.Abstract;
 using Business.Constants;
+using Core.Utilities.Business;
 using Core.Utilities.Results;
 using DataAccess.Abstract;
 using Entities.Concrete;
@@ -20,13 +21,20 @@ namespace Business.Concrete
 
         public IResult Add(Color color)
         {
+            var result = BusinessRules.Run(IsColorExist(color.ColorName));
+            if (result != null)
+            {
+                return result;
+            }
             _colorDal.Add(color);
             return new SuccessResult(Messages.ColorAdded);
+
         }
 
-        public IResult Delete(Color color)
+        public IResult Delete(int id)
         {
-            _colorDal.Delete(color);
+            var result = _colorDal.Get(c => c.Id == id);
+            _colorDal.Delete(result);
             return new SuccessResult(Messages.ColorDeleted);
         }
 
@@ -42,8 +50,23 @@ namespace Business.Concrete
 
         public IResult Update(Color color)
         {
+            var result = BusinessRules.Run(IsColorExist(color.ColorName));
+            if (result != null)
+            {
+                return result;
+            }
             _colorDal.Update(color);
             return new SuccessResult(Messages.ColorUpdated);
+        }
+
+        private IResult IsColorExist(string colorName)
+        {
+            var result = _colorDal.Get(c => c.ColorName == colorName);
+            if (result != null)
+            {
+                return new ErrorResult(Messages.ColorAlreadyExist);
+            }
+            return new SuccessResult();
         }
     }
 }

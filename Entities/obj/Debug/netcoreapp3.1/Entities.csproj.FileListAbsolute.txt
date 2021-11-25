@@ -10,3 +10,4 @@ C:\Users\ENGIN\source\repos\ReCapProject\Entities\obj\Debug\netcoreapp3.1\Entiti
 C:\Users\ENGIN\source\repos\ReCapProject\Entities\obj\Debug\netcoreapp3.1\Entities.csproj.CopyComplete
 C:\Users\ENGIN\source\repos\ReCapProject\Entities\obj\Debug\netcoreapp3.1\Entities.dll
 C:\Users\ENGIN\source\repos\ReCapProject\Entities\obj\Debug\netcoreapp3.1\Entities.pdb
+C:\Users\ENGIN\source\repos\ReCapProject\Entities\obj\Debug\netcoreapp3.1\Entities.GeneratedMSBuildEditorConfig.editorconfig

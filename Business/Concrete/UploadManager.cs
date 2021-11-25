@@ -15,6 +15,11 @@ namespace Business.Concrete
             return FileHelper.Add(file);
         }
 
+        public string AddFromBase64(string base64,string folder="")
+        {
+            return FileHelper.AddFromBase64(base64,folder);
+        }
+
         public IResult Remove(string path)
         {
             return FileHelper.Remove(path);
@@ -23,6 +28,11 @@ namespace Business.Concrete
         public string Update(string oldPath, IFormFile file)
         {
             return FileHelper.Update(oldPath, file);
+        }
+
+        public string UpdateFromBase64(string oldPath, string base64)
+        {
+            return FileHelper.UpdateBase64(oldPath, base64);
         }
     }
 }

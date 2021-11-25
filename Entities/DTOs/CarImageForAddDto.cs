@@ -9,6 +9,6 @@ namespace Entities.DTOs
     public class CarImageForAddDto : IDto
     {
         public int CarId { get; set; }
-        public IFormFile Image { get; set; }
+        public string Image { get; set; }
     }
 }

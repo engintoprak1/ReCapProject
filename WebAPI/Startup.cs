@@ -28,6 +28,7 @@ namespace WebAPI
         {
             services.AddControllers();
             services.AddCors();
+            
             //services.AddSwaggerGen(c =>
             //{
             //    c.SwaggerDoc("v1", new OpenApiInfo {Title = "My API", Version = "v1"});
@@ -92,18 +93,20 @@ namespace WebAPI
                 app.UseDeveloperExceptionPage();
             }
 
-            app.UseCors(builder => builder.WithOrigins("http://localhost:4200").AllowAnyHeader());
+            app.ConfigureCustomExceptionMiddleware();
+
+            app.UseCors(builder => builder.WithOrigins("http://localhost:4200").AllowAnyHeader().AllowAnyMethod().AllowAnyOrigin());
+
+            app.UseHttpsRedirection();
 
             app.UseRouting();
 
             app.UseStaticFiles();
 
-            app.UseHttpsRedirection();
-
             app.UseAuthentication();
+
             app.UseAuthorization();
 
-            
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();

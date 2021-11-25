@@ -60,5 +60,8 @@ namespace Business.Constants
         public static string AccessTokenCreated = "Access token başarıyla oluşturuldu";
 
         public static string CarNotExists = "Böyle bir araba mevcut değil";
+        public static string BrandAlreadyExist = "Böyle bir marka mevcut";
+
+        public static string ColorAlreadyExist = "Böyle bir renk mevcut";
     }
 }

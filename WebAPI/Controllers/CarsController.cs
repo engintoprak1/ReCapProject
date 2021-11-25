@@ -1,5 +1,6 @@
 ﻿using Business.Abstract;
 using Entities.Concrete;
+using Entities.DTOs;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;
@@ -21,23 +22,23 @@ namespace WebAPI.Controllers
         }
 
         [HttpPost("add")]
-        public IActionResult Add(Car car)
+        public IActionResult Add(CarForAddDto car)
         {
             var result = _carService.Add(car);
             return StatusCode(result.Success ? 200 : 400, result);
             
         }
 
-        [HttpPost("delete")]
-        public IActionResult Delete(Car car)
+        [HttpDelete("delete")]
+        public IActionResult Delete(int id)
         {
-            var result = _carService.Delete(car);
+            var result = _carService.Delete(id);
             return StatusCode(result.Success ? 200 : 400, result);
             
         }
 
-        [HttpPost("update")]
-        public IActionResult Update(Car car)
+        [HttpPut("update")]
+        public IActionResult Update(CarForUpdateDto car)
         {
             var result = _carService.Update(car);
             return StatusCode(result.Success ? 200 : 400, result);

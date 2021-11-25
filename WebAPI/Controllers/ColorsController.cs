@@ -25,35 +25,23 @@ namespace WebAPI.Controllers
         {
             var result = _colorService.Add(color);
 
-            if (result.Success)
-            {
-                return Ok(result);
-            }
-            return BadRequest(result);
+            return StatusCode(result.Success ? 200 : 400, result);
         }
 
-        [HttpPost("update")]
+        [HttpPut("update")]
         public IActionResult Update(Color color)
         {
             var result = _colorService.Update(color);
 
-            if (result.Success)
-            {
-                return Ok(result);
-            }
-            return BadRequest(result);
+            return StatusCode(result.Success ? 200 : 400, result);
         }
 
-        [HttpPost("delete")]
-        public IActionResult Delete(Color color)
+        [HttpDelete("delete")]
+        public IActionResult Delete(int id)
         {
-            var result = _colorService.Delete(color);
+            var result = _colorService.Delete(id);
 
-            if (result.Success)
-            {
-                return Ok(result);
-            }
-            return BadRequest(result);
+            return StatusCode(result.Success ? 200 : 400, result);
         }
 
         [HttpGet("getall")]
@@ -61,11 +49,7 @@ namespace WebAPI.Controllers
         {
             var result = _colorService.GetAll();
 
-            if (result.Success)
-            {
-                return Ok(result);
-            }
-            return BadRequest(result);
+            return StatusCode(result.Success ? 200 : 400, result);
         }
 
         [HttpGet("getbyid")]
@@ -73,11 +57,7 @@ namespace WebAPI.Controllers
         {
             var result = _colorService.GetById(id);
 
-            if (result.Success)
-            {
-                return Ok(result);
-            }
-            return BadRequest(result);
+            return StatusCode(result.Success ? 200 : 400, result);
         }
     }
 }

@@ -1,9 +1,9 @@
 C:\Users\ENGIN\source\repos\ReCapProject\Core\bin\Debug\netcoreapp3.1\Core.deps.json
 C:\Users\ENGIN\source\repos\ReCapProject\Core\bin\Debug\netcoreapp3.1\Core.dll
 C:\Users\ENGIN\source\repos\ReCapProject\Core\bin\Debug\netcoreapp3.1\Core.pdb
-C:\Users\ENGIN\source\repos\ReCapProject\Core\obj\Debug\netcoreapp3.1\Core.csproj.AssemblyReference.cache
 C:\Users\ENGIN\source\repos\ReCapProject\Core\obj\Debug\netcoreapp3.1\Core.AssemblyInfoInputs.cache
 C:\Users\ENGIN\source\repos\ReCapProject\Core\obj\Debug\netcoreapp3.1\Core.AssemblyInfo.cs
 C:\Users\ENGIN\source\repos\ReCapProject\Core\obj\Debug\netcoreapp3.1\Core.csproj.CoreCompileInputs.cache
 C:\Users\ENGIN\source\repos\ReCapProject\Core\obj\Debug\netcoreapp3.1\Core.dll
 C:\Users\ENGIN\source\repos\ReCapProject\Core\obj\Debug\netcoreapp3.1\Core.pdb
+C:\Users\ENGIN\source\repos\ReCapProject\Core\obj\Debug\netcoreapp3.1\Core.GeneratedMSBuildEditorConfig.editorconfig

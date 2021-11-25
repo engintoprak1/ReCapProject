@@ -25,7 +25,7 @@ namespace DataAccess.Concrete.EntityFramework
                              join color in context.Colors
                                  on c.ColorId equals color.Id
                                  
-                             select new CarForListingDto { Id = c.Id, BrandName = b.BrandName, ModelName = c.ModelName, ColorName = color.ColorName, Description = c.Description, DailyPrice = c.DailyPrice,Image = context.CarImages.Where(i=>i.CarId==c.Id).FirstOrDefault(),AvailableForRent = !context.Rentals.Any(r=>r.ReturnDate==null)};
+                             select new CarForListingDto { Id = c.Id, BrandName = b.BrandName, ModelName = c.ModelName, ColorName = color.ColorName, Description = c.Description, DailyPrice = c.DailyPrice,ModelYear=c.ModelYear,Image = context.CarImages.Where(i=>i.CarId==c.Id).FirstOrDefault(),AvailableForRent = !context.Rentals.Any(r=>r.ReturnDate==null)};
                 return result.ToList();
             }
         }

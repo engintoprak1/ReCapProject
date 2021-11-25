@@ -14,3 +14,4 @@ C:\Users\ENGIN\source\repos\ReCapProject\Business\obj\Debug\netcoreapp3.1\Busine
 C:\Users\ENGIN\source\repos\ReCapProject\Business\obj\Debug\netcoreapp3.1\Business.csproj.CopyComplete
 C:\Users\ENGIN\source\repos\ReCapProject\Business\obj\Debug\netcoreapp3.1\Business.dll
 C:\Users\ENGIN\source\repos\ReCapProject\Business\obj\Debug\netcoreapp3.1\Business.pdb
+C:\Users\ENGIN\source\repos\ReCapProject\Business\obj\Debug\netcoreapp3.1\Business.GeneratedMSBuildEditorConfig.editorconfig
