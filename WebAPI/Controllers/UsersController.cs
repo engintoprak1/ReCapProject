@@ -1,5 +1,6 @@
 ﻿using Business.Abstract;
 using Core.Entities.Concrete;
+using Entities.DTOs;
 using Microsoft.AspNetCore.Mvc;
 
 namespace WebAPI.Controllers
@@ -27,7 +28,7 @@ namespace WebAPI.Controllers
             return BadRequest(result);
         }
 
-        [HttpPost("delete")]
+        [HttpDelete("delete")]
         public IActionResult Delete(User user)
         {
             var result = _userService.Delete(user);
@@ -39,8 +40,8 @@ namespace WebAPI.Controllers
             return BadRequest(result);
         }
 
-        [HttpPost("update")]
-        public IActionResult Update(User user)
+        [HttpPut("update")]
+        public IActionResult Update(UserForUpdateDto user)
         {
             var result = _userService.Update(user);
 
@@ -67,6 +68,30 @@ namespace WebAPI.Controllers
         public IActionResult GetById(int id)
         {
             var result = _userService.GetById(id);
+
+            if (result.Success)
+            {
+                return Ok(result);
+            }
+            return BadRequest(result);
+        }
+
+        [HttpGet("getbyemail")]
+        public IActionResult GetByEmail(string email)
+        {
+            var result = _userService.GetByEmail(email);
+            
+            if (result.Success)
+            {
+                return Ok(result);
+            }
+            return BadRequest(result);
+        }
+
+        [HttpGet("getdetails")]
+        public IActionResult GetDetails()
+        {
+            var result = _userService.GetDetails();
 
             if (result.Success)
             {

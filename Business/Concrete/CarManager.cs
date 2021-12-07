@@ -28,12 +28,13 @@ namespace Business.Concrete
             _carImageService = carImageService;
         }
 
+        [SecuredOperation("admin")]
         [ValidationAspect(typeof(CarValidator))]
         [CacheRemoveAspect("ICarService.Get")]
         public IResult Add(CarForAddDto car)
         {
 
-            Car carToAdd = new Car{BrandId=car.BrandId,ModelName=car.ModelName,ColorId = car.ColorId, DailyPrice= car.DailyPrice,ModelYear=car.ModelYear ,Description= car.Description};
+            Car carToAdd = new Car{BrandId=car.BrandId,ModelName=car.ModelName,ColorId = car.ColorId, DailyPrice= car.DailyPrice,ModelYear=car.ModelYear ,Description= car.Description,Findeks=car.Findeks};
             _carDal.Add(carToAdd);
             var imagesToAdd = car.Images.Select(i => new CarImageForAddDto() { CarId = carToAdd.Id, Image = i }).ToList();
             foreach (var image in imagesToAdd)
@@ -43,8 +44,8 @@ namespace Business.Concrete
             return new SuccessResult(Messages.CarAdded);
         }
 
-        
-        
+
+        [SecuredOperation("admin")]
         [CacheRemoveAspect("ICarService.Get")]
         public IResult Delete(int id)
         {
@@ -53,6 +54,7 @@ namespace Business.Concrete
             return new SuccessResult(Messages.CarDeleted);
         }
 
+        [SecuredOperation("admin")]
         [CacheRemoveAspect("ICarService.Get")]
         public IResult Update(CarForUpdateDto car)
         {
@@ -67,6 +69,7 @@ namespace Business.Concrete
             carToUpdate.BrandId = car.BrandId;
             carToUpdate.ColorId = car.ColorId;
             carToUpdate.DailyPrice = car.DailyPrice;
+            carToUpdate.Findeks = car.Findeks;
             _carDal.Update(carToUpdate);
             foreach (var image in _carImageService.GetAllByCarId(carToUpdate.Id).Data)
             {
@@ -131,6 +134,12 @@ namespace Business.Concrete
             var result = _carDal.Get(i => i.Id == id);
             if (result == null) return new ErrorDataResult<CarForDetailDto>();
             return new SuccessDataResult<CarForDetailDto>(_carDal.GetCarDetailById(id));
+        }
+
+        public IDataResult<int> GetCarFindeks(int carId)
+        {
+            var result = _carDal.Get(c => c.Id == carId);
+            return new SuccessDataResult<int>(result.Findeks);
         }
     }
 }

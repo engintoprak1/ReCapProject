@@ -17,5 +17,6 @@ namespace Entities.DTOs
         public int ModelYear { get; set; }
         public bool AvailableForRent { get; set; }
         public CarImage Image { get; set; }
+        public int Findeks { get; set; }
     }
 }

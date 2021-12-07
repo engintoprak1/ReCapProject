@@ -8,6 +8,5 @@ namespace Entities.DTOs
     {
         public int CarId { get; set; }
         public int RentDays { get; set; }
-        public string CartNumber { get; set; }
     }
 }

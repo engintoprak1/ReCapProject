@@ -25,7 +25,7 @@ namespace DataAccess.Concrete.EntityFramework
                              join color in context.Colors
                                  on c.ColorId equals color.Id
                                  
-                             select new CarForListingDto { Id = c.Id, BrandName = b.BrandName, ModelName = c.ModelName, ColorName = color.ColorName, Description = c.Description, DailyPrice = c.DailyPrice,ModelYear=c.ModelYear,Image = context.CarImages.Where(i=>i.CarId==c.Id).FirstOrDefault(),AvailableForRent = !context.Rentals.Any(r=>r.ReturnDate==null)};
+                             select new CarForListingDto { Id = c.Id, BrandName = b.BrandName, ModelName = c.ModelName, ColorName = color.ColorName, Description = c.Description, DailyPrice = c.DailyPrice,ModelYear=c.ModelYear,Image = context.CarImages.Where(i=>i.CarId==c.Id).FirstOrDefault(),AvailableForRent = !context.Rentals.Any(r=>r.ReturnDate==null&&r.CarId==c.Id),Findeks=c.Findeks};
                 return result.ToList();
             }
         }
@@ -39,7 +39,7 @@ namespace DataAccess.Concrete.EntityFramework
                     join color in context.Colors
                         on c.ColorId equals color.Id
                     where c.Id == id
-                    select new CarForDetailDto() { Id = c.Id, BrandName = b.BrandName, ModelName = c.ModelName, ColorName = color.ColorName, Description = c.Description, DailyPrice = c.DailyPrice, Images = context.CarImages.Where(i => i.CarId == c.Id).ToList(), ModelYear = c.ModelYear };
+                    select new CarForDetailDto() { Id = c.Id, BrandName = b.BrandName, ModelName = c.ModelName, ColorName = color.ColorName, Description = c.Description, DailyPrice = c.DailyPrice, Images = context.CarImages.Where(i => i.CarId == c.Id).ToList(), ModelYear = c.ModelYear,Findeks=c.Findeks };
                 return result.FirstOrDefault();
             }
         }

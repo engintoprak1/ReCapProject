@@ -31,6 +31,7 @@ namespace Business.Concrete
                 Email = userForRegisterDto.Email,
                 FirstName = userForRegisterDto.FirstName,
                 LastName = userForRegisterDto.LastName,
+                MobilePhone = userForRegisterDto.MobilePhone,
                 PasswordHash = passwordHash,
                 PasswordSalt = passwordSalt,
                 Status = true
@@ -41,34 +42,35 @@ namespace Business.Concrete
 
         public IDataResult<User> Login(UserForLoginDto userForLoginDto)
         {
-            var userToCheck = _userService.GetByEmail(userForLoginDto.Email);
+            var userToCheck = _userService.GetByEmail(userForLoginDto.Email).Data;
             if (userToCheck == null)
             {
                 return new ErrorDataResult<User>(Messages.UserNotFound);
             }
 
-            if (!HashingHelper.VerifyPasswordHash(userForLoginDto.Password, userToCheck.Data.PasswordHash, userToCheck.Data.PasswordSalt))
+            if (!HashingHelper.VerifyPasswordHash(userForLoginDto.Password, userToCheck.PasswordHash, userToCheck.PasswordSalt))
             {
                 return new ErrorDataResult<User>(Messages.PasswordError);
             }
 
-            return new SuccessDataResult<User>(userToCheck.Data, Messages.SuccessfulLogin);
+            return new SuccessDataResult<User>(userToCheck, Messages.SuccessfulLogin);
         }
 
         public IResult UserExists(string email)
         {
-            if (_userService.GetByEmail(email).Success == false)
+            if (_userService.GetByEmail(email).Success == true)
             {
                 return new ErrorResult(Messages.UserAlreadyExists);
             }
             return new SuccessResult();
         }
 
-        public IDataResult<AccessToken> CreateAccessToken(User user)
+        public IDataResult<UserLoginResultDto> CreateAccessToken(User user)
         {
             var claims = _userService.GetClaims(user);
             var accessToken = _tokenHelper.CreateToken(user, claims.Data);
-            return new SuccessDataResult<AccessToken>(accessToken, Messages.AccessTokenCreated);
+            UserLoginResultDto result = new UserLoginResultDto { AccessToken=accessToken,FirstName = user.FirstName, LastName = user.LastName,Email = user.Email, Address = user.Address, MobilePhone = user.MobilePhone };
+            return new SuccessDataResult<UserLoginResultDto>(result,Messages.AccessTokenCreated);
         }
     }
 }

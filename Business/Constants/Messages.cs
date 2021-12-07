@@ -63,5 +63,9 @@ namespace Business.Constants
         public static string BrandAlreadyExist = "Böyle bir marka mevcut";
 
         public static string ColorAlreadyExist = "Böyle bir renk mevcut";
+
+        public static string CreditCardAdded = "Kredi kartı eklendi";
+        public static string CardAlreadyExist = "Kredi kartı zaten mevcut";
+        public static string CreditCardNotFound = "Kredi kartı bulunamadı";
     }
 }

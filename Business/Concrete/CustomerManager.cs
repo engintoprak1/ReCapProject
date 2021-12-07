@@ -37,7 +37,32 @@ namespace Business.Concrete
 
         public IDataResult<Customer> GetById(int id)
         {
-            return new SuccessDataResult<Customer>(_customerDal.Get(c => c.Id == id));
+            var result = _customerDal.Get(c => c.Id == id);
+            if (result==null)
+            {
+                return new ErrorDataResult<Customer>();
+            }
+            return new SuccessDataResult<Customer>(result);
+        }
+
+        public IDataResult<Customer> GetByUserId(int userId)
+        {
+            var result = _customerDal.Get(c => c.UserId == userId);
+            if (result == null)
+            {
+                return new ErrorDataResult<Customer>();
+            }
+            return new SuccessDataResult<Customer>(result);
+        }
+
+        public IDataResult<int> GetCustomerFindex(int id)
+        {
+            var result = _customerDal.Get(c=>c.Id==id);
+            if (result==null)
+            {
+                return new ErrorDataResult<int>();
+            }
+            return new SuccessDataResult<int>(result.Findeks);
         }
 
         public IResult Update(Customer customer)
@@ -45,5 +70,7 @@ namespace Business.Concrete
             _customerDal.Update(customer);
             return new SuccessResult(Messages.CustomerUpdated);
         }
+
+
     }
 }

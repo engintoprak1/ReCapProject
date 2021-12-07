@@ -19,18 +19,27 @@ namespace Business.Concrete
         IRentalDal _rentalDal;
         private ICarService _carService;
         private IHttpContextAccessor _httpContextAccessor;
+        private ICustomerService _customerService;
 
-        public RentalManager(IRentalDal rentalDal, IHttpContextAccessor httpContextAccessor, ICarService carService)
+        public RentalManager(IRentalDal rentalDal, IHttpContextAccessor httpContextAccessor, ICarService carService, ICustomerService customerService)
         {
             _rentalDal = rentalDal;
             _httpContextAccessor = httpContextAccessor;
             _carService = carService;
+            _customerService = customerService;
+
         }
+
+        [Authentication]
         public IResult Add(RentalForAddDto rental)
         {
-            int authUserId = 2003; //_httpContextAccessor.HttpContext.User.GetAuthenticatedUserId();
-            
-            var result = BusinessRules.Run(IsCarReturned(rental.CarId),IsCarExists(rental.CarId));
+            int authUserId = _httpContextAccessor.HttpContext.User.GetAuthenticatedUserId();
+            var customer = _customerService.GetByUserId(authUserId);
+            if (customer.Success == false)
+            {
+                return new ErrorResult();
+            }
+            var result = BusinessRules.Run(IsCarReturned(rental.CarId),IsCarExists(rental.CarId),IsFindexEnough(rental.CarId,customer.Data.Id));
             if (result!=null)
             {
                 return result;
@@ -39,7 +48,7 @@ namespace Business.Concrete
             Rental rentalToAdd = new Rental();
             rentalToAdd.RentDate = DateTime.Now;
             rentalToAdd.CarId = rental.CarId;
-            rentalToAdd.CustomerId = authUserId;
+            rentalToAdd.CustomerId = customer.Data.Id;
             rentalToAdd.RentDays = rental.RentDays;
             rentalToAdd.TotalPrice = (decimal)rental.RentDays * carToRent.Data.DailyPrice;
             _rentalDal.Add(rentalToAdd);
@@ -94,7 +103,17 @@ namespace Business.Concrete
             return new SuccessResult();
         }
 
+        private IResult IsFindexEnough(int carId,int customerId)
+        {
+            int carFindex = _carService.GetCarFindeks(carId).Data;
+            int userFindex = _customerService.GetCustomerFindex(customerId).Data;
 
+            if (userFindex>=carFindex)
+            {
+                return new SuccessResult();
+            }
+            return new ErrorResult();
+        }
 
     }
 }

@@ -7,3 +7,4 @@ C:\Users\ENGIN\source\repos\ReCapProject\Core\obj\Debug\netcoreapp3.1\Core.cspro
 C:\Users\ENGIN\source\repos\ReCapProject\Core\obj\Debug\netcoreapp3.1\Core.dll
 C:\Users\ENGIN\source\repos\ReCapProject\Core\obj\Debug\netcoreapp3.1\Core.pdb
 C:\Users\ENGIN\source\repos\ReCapProject\Core\obj\Debug\netcoreapp3.1\Core.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\ENGIN\source\repos\ReCapProject\Core\obj\Debug\netcoreapp3.1\Core.csproj.AssemblyReference.cache
