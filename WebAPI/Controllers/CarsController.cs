@@ -32,6 +32,7 @@ namespace WebAPI.Controllers
         [HttpDelete("delete")]
         public IActionResult Delete(int id)
         {
+            
             var result = _carService.Delete(id);
             return StatusCode(result.Success ? 200 : 400, result);
             

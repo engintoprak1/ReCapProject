@@ -34,6 +34,7 @@ namespace Business.Concrete
         public IResult Add(CarForAddDto car)
         {
 
+
             Car carToAdd = new Car{BrandId=car.BrandId,ModelName=car.ModelName,ColorId = car.ColorId, DailyPrice= car.DailyPrice,ModelYear=car.ModelYear ,Description= car.Description,Findeks=car.Findeks};
             _carDal.Add(carToAdd);
             var imagesToAdd = car.Images.Select(i => new CarImageForAddDto() { CarId = carToAdd.Id, Image = i }).ToList();
@@ -41,9 +42,12 @@ namespace Business.Concrete
             {
                 _carImageService.Add(image);
             }
+
+            
+            
+
             return new SuccessResult(Messages.CarAdded);
         }
-
 
         [SecuredOperation("admin")]
         [CacheRemoveAspect("ICarService.Get")]
@@ -99,9 +103,6 @@ namespace Business.Concrete
             return new SuccessDataResult<Car>(_carDal.Get(c => c.Id == id));
         }
         
-
-        
-
         [TransactionScopeAspect]
         public IResult AddTransactionalTest(Car car)
         {
